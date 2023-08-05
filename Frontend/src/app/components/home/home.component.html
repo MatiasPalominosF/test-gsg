@@ -18,7 +18,7 @@
         <!-- Fila de arriba con la tabla de Angular Material -->
         <div class="col-md-12">
           <div class="d-flex flex-column h-100">
-            <div class="mat-elevation-z8 table-content">
+            <div class="mat-elevation-z8">
               <table mat-table [dataSource]="dataSource" matSort>
                 <!-- ID Column -->
                 <ng-container matColumnDef="id">
@@ -65,13 +65,25 @@
           </div>
         </div>
       </div>
-
       <div class="row" style="flex-grow: 1">
         <!-- Fila de abajo con el contenido restante (gráfico u otros elementos) -->
-        <div class="col-md-12 my-2">
-          <h2>Adiós</h2>
-          <!-- Contenido del gráfico o elementos adicionales -->
-          <!-- Aquí puedes agregar tu gráfico más adelante -->
+        <div class="col-md-12 my-4" style="display: flex">
+          <div style="flex: 1; display: flex; flex-direction: column">
+            <ngx-charts-bar-vertical
+              [view]="view"
+              [results]="single"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="showLegend"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="yAxisLabel"
+              style="flex-grow: 1"
+            >
+            </ngx-charts-bar-vertical>
+          </div>
         </div>
       </div>
     </div>

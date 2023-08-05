@@ -61,6 +61,90 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  // Options for the chart.
+  view: [number, number] = [1100, 290]; // 800 de ancho y 300 de alto (ajusta estos valores según tus necesidades)
+
+  showXAxis = true;
+  showYAxis = true;
+  gradient = true;
+  showLegend = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Price';
+  showYAxisLabel = true;
+  yAxisLabel = 'Dates';
+  timeline = true;
+  doughnut = true;
+  colorScheme = {
+    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
+  };
+
+  public single = [
+    {
+      "name": "China",
+      "value": 500
+    },
+    {
+      "name": "USA",
+      "value": 450
+    },
+    {
+      "name": "Norway",
+      "value": 392
+    },
+    {
+      "name": "Japan",
+      "value": 897
+    },
+    {
+      "name": "Germany",
+      "value": 672
+    },
+    {
+      "name": "France",
+      "value": 345
+    },
+    {
+      "name": "France1",
+      "value": 190
+    },
+    {
+      "name": "France2",
+      "value": 997
+    },
+    {
+      "name": "France3",
+      "value": 344
+    },
+    {
+      "name": "France4",
+      "value": 90
+    },
+    {
+      "name": "France5",
+      "value": 766
+    },
+    {
+      "name": "France6",
+      "value": 988
+    },
+    {
+      "name": "France7",
+      "value": 762
+    },
+    {
+      "name": "France8",
+      "value": 123
+    },
+    {
+      "name": "France9",
+      "value": 672
+    },
+    {
+      "name": "France10",
+      "value": 1036
+    },
+  ];
+
   selectedValue!: string;
   foods: Food[] = [
     { value: 'steak-0', viewValue: 'Steak' },

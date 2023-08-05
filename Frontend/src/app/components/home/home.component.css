@@ -8,13 +8,8 @@
   height: 300px; /* Establece la altura deseada para la fila que contiene la tabla */
 }
 
-.table-content {
-  height: 100%; /* Establece la altura del contenedor de la tabla para que ocupe toda la altura de la fila */
-}
-
 table {
   width: 100%;
-  height: 300px !important;
 }
 
 .mat-mdc-form-field {
@@ -26,3 +21,7 @@ td,
 th {
   width: 25%;
 }
+
+/* Agrega estilos para que el gráfico ocupe todo el espacio disponible */
+
+

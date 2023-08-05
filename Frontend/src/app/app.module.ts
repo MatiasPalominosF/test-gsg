@@ -13,6 +13,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +32,7 @@ import { MatInputModule } from '@angular/material/input';
     MatSortModule,
     MatInputModule,
     MatPaginatorModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
