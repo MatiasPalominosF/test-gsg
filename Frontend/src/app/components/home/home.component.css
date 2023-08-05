@@ -1,4 +1,28 @@
-.container {
-  margin: 0 !important;
-  padding: 0 !important;
+.margins {
+  padding: 1rem;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.table-container {
+  height: 300px; /* Establece la altura deseada para la fila que contiene la tabla */
+}
+
+.table-content {
+  height: 100%; /* Establece la altura del contenedor de la tabla para que ocupe toda la altura de la fila */
+}
+
+table {
+  width: 100%;
+  height: 300px !important;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
 }
