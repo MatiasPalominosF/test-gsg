@@ -55,28 +55,26 @@ const NAMES: string[] = [
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
-  dataSource!: MatTableDataSource<UserData>;
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+
+  public displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
+  public dataSource!: MatTableDataSource<UserData>;
 
   // Options for the chart.
-  view: [number, number] = [1100, 290]; // 800 de ancho y 300 de alto (ajusta estos valores según tus necesidades)
+  public view: [number, number] = [1100, 290];
+  public showXAxis = true;
+  public showYAxis = true;
+  public gradient = true;
+  public showLegend = true;
+  public showXAxisLabel = true;
+  public xAxisLabel = 'Price';
+  public showYAxisLabel = true;
+  public yAxisLabel = 'Dates';
+  public timeline = true;
+  public doughnut = true;
 
-  showXAxis = true;
-  showYAxis = true;
-  gradient = true;
-  showLegend = true;
-  showXAxisLabel = true;
-  xAxisLabel = 'Price';
-  showYAxisLabel = true;
-  yAxisLabel = 'Dates';
-  timeline = true;
-  doughnut = true;
-  colorScheme = {
-    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
-  };
 
   public single = [
     {

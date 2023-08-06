@@ -65,12 +65,14 @@
           </div>
         </div>
       </div>
-      <div class="row" style="flex-grow: 1">
+      <div
+        class="row"
+        style="height: 50%; display: flex; flex-direction: column"
+      >
         <!-- Fila de abajo con el contenido restante (gráfico u otros elementos) -->
-        <div class="col-md-12 my-4" style="display: flex">
-          <div style="flex: 1; display: flex; flex-direction: column">
+        <div class="col-md-12 my-4 chart-container">
+          <div>
             <ngx-charts-bar-vertical
-              [view]="view"
               [results]="single"
               [gradient]="gradient"
               [xAxis]="showXAxis"
@@ -80,7 +82,7 @@
               [showYAxisLabel]="showYAxisLabel"
               [xAxisLabel]="xAxisLabel"
               [yAxisLabel]="yAxisLabel"
-              style="flex-grow: 1"
+              style="flex-grow: 1; width: 100%; height: 100%"
             >
             </ngx-charts-bar-vertical>
           </div>
