@@ -3,7 +3,7 @@
     <!-- Columna de la izquierda con el botón -->
     <div class="col-md-2">
       <mat-form-field>
-        <mat-label>Nemotécnico</mat-label>
+        <mat-label>Mnemonic</mat-label>
         <mat-select
           [(ngModel)]="selectedSymbol"
           name="symbol"
@@ -79,6 +79,7 @@
                 #paginator
                 [pageSizeOptions]="[4]"
                 aria-label="Select page of users"
+                showFirstLastButtons
               ></mat-paginator>
             </div>
           </div>

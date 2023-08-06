@@ -7,56 +7,10 @@ import { ISymbol } from 'src/app/_interfaces/Symbol.interface';
 import { HistoricalService } from 'src/app/_services/historical/historical.service';
 import { SymbolService } from 'src/app/_services/symbol/symbol.service';
 
-interface Food {
-  value: string;
-  viewValue: string;
-}
-
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  fruit: string;
-}
-
 export interface IHistoricalChart {
   name: string;
   value: number;
 }
-
-/** Constants used to fill up our data base. */
-const FRUITS: string[] = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
-];
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
-
 
 @Component({
   selector: 'app-home',
@@ -67,7 +21,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-
   public displayedColumns: string[] = ['position', 'date', 'close'];
   public dataSource: MatTableDataSource<IHistoricalData> = new MatTableDataSource<IHistoricalData>();
   public symbols: ISymbol[] = [];
@@ -76,8 +29,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public loading = false;
   public selectedSymbol!: any;
 
-  // Options for the chart.
-  public view: [number, number] = [1100, 290];
+  // Options for the chart
   public showXAxis = true;
   public showYAxis = true;
   public gradient = true;
@@ -88,74 +40,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public yAxisLabel = 'Price';
   public timeline = true;
   public doughnut = true;
-
-
-  public single = [
-    {
-      "name": "China",
-      "value": 500
-    },
-    {
-      "name": "USA",
-      "value": 450
-    },
-    {
-      "name": "Norway",
-      "value": 392
-    },
-    {
-      "name": "Japan",
-      "value": 897
-    },
-    {
-      "name": "Germany",
-      "value": 672
-    },
-    {
-      "name": "France",
-      "value": 345
-    },
-    {
-      "name": "France1",
-      "value": 190
-    },
-    {
-      "name": "France2",
-      "value": 997
-    },
-    {
-      "name": "France3",
-      "value": 344
-    },
-    {
-      "name": "France4",
-      "value": 90
-    },
-    {
-      "name": "France5",
-      "value": 766
-    },
-    {
-      "name": "France6",
-      "value": 988
-    },
-    {
-      "name": "France7",
-      "value": 762
-    },
-    {
-      "name": "France8",
-      "value": 123
-    },
-    {
-      "name": "France9",
-      "value": 672
-    },
-    {
-      "name": "France10",
-      "value": 1036
-    },
-  ];
 
   constructor(
     private _symbolService: SymbolService,
@@ -199,6 +83,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.loading = false;
       },
       error => {
+        this.loading = false;
         console.error(error);
       }
     )
@@ -222,14 +107,5 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.loading = true;
     const symbol: string = event.value;
     this.getHistoricalBySymbol(symbol);
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 }
