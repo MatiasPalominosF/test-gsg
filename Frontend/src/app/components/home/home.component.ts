@@ -74,12 +74,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   getHistoricalBySymbol(symbol: string) {
+    this.historical = [];
+    this.dataSource.data = [];
     this._historicalService.getHistoricalBySymbol(symbol).subscribe(
       stockData => {
         this.transformHistoricalData(stockData);
         this.historical = stockData.historical;
         this.dataSource.data = this.historical;
-
         this.loading = false;
       },
       error => {
@@ -90,6 +91,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   transformHistoricalData(stockData: IStockData) {
+    this.historicalForChart = [];
     this.historicalForChart = stockData.historical.map((dataPoint: IHistoricalData) => {
       return {
         name: dataPoint.date,
