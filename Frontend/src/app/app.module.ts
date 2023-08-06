@@ -14,6 +14,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { HttpClientModule } from "@angular/common/http";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatSortModule,
     MatInputModule,
     MatPaginatorModule,
-    NgxChartsModule
+    NgxChartsModule,
+    HttpClientModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

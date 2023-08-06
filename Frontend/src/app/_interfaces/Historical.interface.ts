@@ -1,4 +1,4 @@
-interface IHistoricalData {
+export interface IHistoricalData {
   date: string;
   close: number;
 }

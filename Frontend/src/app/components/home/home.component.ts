@@ -2,6 +2,10 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { IHistoricalData, IStockData } from 'src/app/_interfaces/Historical.interface';
+import { ISymbol } from 'src/app/_interfaces/Symbol.interface';
+import { HistoricalService } from 'src/app/_services/historical/historical.service';
+import { SymbolService } from 'src/app/_services/symbol/symbol.service';
 
 interface Food {
   value: string;
@@ -13,6 +17,11 @@ export interface UserData {
   name: string;
   progress: string;
   fruit: string;
+}
+
+export interface IHistoricalChart {
+  name: string;
+  value: number;
 }
 
 /** Constants used to fill up our data base. */
@@ -59,8 +68,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
 
-  public displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
-  public dataSource!: MatTableDataSource<UserData>;
+  public displayedColumns: string[] = ['position', 'date', 'close'];
+  public dataSource: MatTableDataSource<IHistoricalData> = new MatTableDataSource<IHistoricalData>();
+  public symbols: ISymbol[] = [];
+  public historical: IHistoricalData[] = [];
+  public historicalForChart: IHistoricalChart[] = [];
+  public loading = false;
+  public selectedSymbol!: any;
 
   // Options for the chart.
   public view: [number, number] = [1100, 290];
@@ -69,9 +83,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public gradient = true;
   public showLegend = true;
   public showXAxisLabel = true;
-  public xAxisLabel = 'Price';
+  public xAxisLabel = 'Date';
   public showYAxisLabel = true;
-  public yAxisLabel = 'Dates';
+  public yAxisLabel = 'Price';
   public timeline = true;
   public doughnut = true;
 
@@ -143,19 +157,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     },
   ];
 
-  selectedValue!: string;
-  foods: Food[] = [
-    { value: 'steak-0', viewValue: 'Steak' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' },
-  ];
-
-  constructor() {
-    // Create 100 users
-    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
+  constructor(
+    private _symbolService: SymbolService,
+    private _historicalService: HistoricalService,
+  ) {
   }
 
   ngAfterViewInit() {
@@ -164,6 +169,59 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.getSymbols();
+    this.dataSource.data = [];
+  }
+
+  getSymbols() {
+    this.loading = true;
+    this._symbolService.getSymbols().subscribe(
+      symbols => {
+        this.symbols = symbols;
+        const symbol: string = this.symbols[0].symbol
+        this.selectedSymbol = symbol;
+        this.getHistoricalBySymbol(symbol);
+      },
+      error => {
+        this.loading = false;
+        console.error(error);
+      }
+    );
+  }
+
+  getHistoricalBySymbol(symbol: string) {
+    this._historicalService.getHistoricalBySymbol(symbol).subscribe(
+      stockData => {
+        this.transformHistoricalData(stockData);
+        this.historical = stockData.historical;
+        this.dataSource.data = this.historical;
+
+        this.loading = false;
+      },
+      error => {
+        console.error(error);
+      }
+    )
+  }
+
+  transformHistoricalData(stockData: IStockData) {
+    this.historicalForChart = stockData.historical.map((dataPoint: IHistoricalData) => {
+      return {
+        name: dataPoint.date,
+        value: dataPoint.close
+      };
+    });
+    this.historicalForChart.sort((a, b) => {
+      const dateA = new Date(a.name);
+      const dateB = new Date(b.name);
+      return dateB.getTime() - dateA.getTime();
+    });
+  }
+
+  onSelectionChange(event: any) {
+    this.loading = true;
+    const symbol: string = event.value;
+    this.getHistoricalBySymbol(symbol);
   }
 
   applyFilter(event: Event) {
@@ -174,21 +232,4 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
-}
-
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-    ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-    '.';
-
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
-  };
 }
